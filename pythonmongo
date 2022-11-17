@@ -1,0 +1,24 @@
+import pymongo
+import pandas
+
+mongo_client = pymongo.MongoClient("mongodb+srv://pannu:abc12311@cluster0.y6mxxtm.mongodb.net/?retryWrites=true&w=majority")
+db = mongo_client.test
+
+print(mongo_client.list_database_names())
+
+# Database Name
+db = mongo_client["cluster0"]
+
+print(db.test.multidata)
+
+# Collection Name
+col = db["test"]
+print(str(col.test.multidata))
+
+x= col.find()
+
+for data in x:
+    print(data)
+
+#x = col.find_one()
+#print(x)
