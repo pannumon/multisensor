@@ -1,0 +1,99 @@
+[
+    {
+        "id": "ecefa4ede0a4fb05",
+        "type": "tab",
+        "label": "MQTT to MongoDB",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "30844a3f21cd8b17",
+        "type": "mqtt in",
+        "z": "ecefa4ede0a4fb05",
+        "name": "testi",
+        "topic": "multidrone",
+        "qos": "2",
+        "datatype": "json",
+        "broker": "3dad1b857afba9a1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "e1ebcfd38bdd7fa5",
+                "b562145583c00e69"
+            ]
+        ]
+    },
+    {
+        "id": "e1ebcfd38bdd7fa5",
+        "type": "debug",
+        "z": "ecefa4ede0a4fb05",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 280,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b562145583c00e69",
+        "type": "mongodb3 in",
+        "z": "ecefa4ede0a4fb05",
+        "service": "_ext_",
+        "configNode": "4211c584e8ee6a73",
+        "name": "drone",
+        "collection": "multidatagsm",
+        "operation": "insertOne",
+        "x": 290,
+        "y": 200,
+        "wires": [
+            []
+        ],
+        "info": "lähettää dataa tietokantaan"
+    },
+    {
+        "id": "3dad1b857afba9a1",
+        "type": "mqtt-broker",
+        "name": "hivemq",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "4211c584e8ee6a73",
+        "type": "mongodb3",
+        "uri": "mongodb://pannu:abc12311@ac-7ffivht-shard-00-00.y6mxxtm.mongodb.net:27017,ac-7ffivht-shard-00-01.y6mxxtm.mongodb.net:27017,ac-7ffivht-shard-00-02.y6mxxtm.mongodb.net:27017/?ssl=true&replicaSet=atlas-93w3no-shard-0&authSource=admin&retryWrites=true&w=majority",
+        "name": "",
+        "options": "",
+        "parallelism": "-1"
+    }
+]
