@@ -135,30 +135,31 @@ void connect_broker() {
 
       Serial.println(" connected");
       // connection succeeded
-      mqttClient.subscribe("testTopic/#");
+      mqttClient.subscribe("multidrone/#");
     } else {
     // connection failed
     Serial.print("broker connection failed, rc=");
     Serial.print(mqttClient.state());// will provide more information on failure
-   // Serial.println(" try again in 5 seconds");
+    Serial.println(" try again in 5 seconds");
     delay(5000);
     }
   }
 }
-/*
+
 void publish_message() {
   if(mqttClient.connect("clientId-xxxxxxxxxx")) {
-    mqttClient.publish("testTopic554", "hello world");
+    mqttClient.publish("multidrone", "hello world");
     delay(5000);
   }
 }
-*/
+
 void publish_data() {  
 
   Serial.println("publishing...");
   
   //DHT21
-  float readData = DHT.read2302(outPin);
+ 
+ // float readData = DHT.read2302(outPin);
 
   //LM35
   int lm35adc_value;
@@ -192,7 +193,7 @@ void publish_data() {
 */
 
  // serializeJson(doc, Serial);
-  Serial.println();
+  //Serial.println();
 
 // kaikki data, muisti loppuu kesken
 //String data = " {\"T_DHT\":" + String(DHT.temperature) + ", " + "\"T_BME\":" + String(bme.readTemperature()) + ", " + "\"T_SCD41\":" + String(mySensor.getTemperature()) + ", " + "\"T_LM35\":" + String(LM35_T) + ", " + "\"RH_DHT\":" + String(DHT.humidity) + ", " + "\"RH_BME\":" + String(bme.readHumidity()) + ", " + "\"RH_SCD41\":" + String(mySensor.getHumidity()) + ", " + "\"CO2_SCD41\":" + String(mySensor.getCO2()) + ", " + "\"P_BME\":" + String(bme.readPressure()) + ", " + "\"h_default\":" + String(bme.readAltitude(P_default)) + ", " + "\"h_FMI\":" + String(bme.readAltitude(P_FMI)) + "}\n " ;
@@ -205,16 +206,22 @@ void publish_data() {
 
 //tämäkin ehkä kelpaisi
 //String data = " {\"T\":" + String(LM35_T) + ", " + "\"RH\":" + String(mySensor.getHumidity()) + ", " + "\"P\":" + String(bme.readPressure()) + ", " + "\"CO2\":" + String(mySensor.getCO2()) + "}\n " ;
-String data = " {\"T\":" + String(LM35_T) + ", " + "\"RH\":" + String(mySensor.getHumidity()) + ", " + "\"CO2\":" + String(mySensor.getCO2()) + ", " + "}\n " ;
 
-Serial.println();
+
+//Tuo \n stringin lopussa vissiin sotkee kaiken
+String data = "{\"T\":" + String(LM35_T) + ", " + "\"RH\":" + String(mySensor.getHumidity()) + ", " + "\"CO2\":" + String(mySensor.getCO2()) + "}";
+
+//String data = "debug stringi";
+
+Serial.println(data);
 
 int length = data.length();
 
-  char msgBuffer[length];
-  data.toCharArray(msgBuffer,length+1);
-  Serial.println(msgBuffer);
+char msgBuffer[length];
+data.toCharArray(msgBuffer,length+1);
+Serial.println(msgBuffer);
 
-  mqttClient.publish("testTopic554", msgBuffer); //Publish data to HiveMq
+mqttClient.publish("multidrone", msgBuffer); //Publish data to HiveMq
 
 }
+
